@@ -87,6 +87,48 @@ class SimpleLoginSecure
 		return true;
 	}
 
+    /**
+	 * Updates an existing user account
+	 *
+	 * @access	public
+	 * @param	integer
+	 * @param	string
+	 * @return	bool
+	 */
+    function update($user_id = 0, $user_pass = '')
+    {
+        $this->CI =& get_instance();
+
+		//Make sure account info was sent
+		if($user_email == 0 OR $user_pass == '') {
+			return false;
+		}
+		
+		//Check against user table
+		$this->CI->db->where('user_id', $user_id);
+		$query = $this->CI->db->get_where($this->user_table);
+		
+		if ($query->num_rows() == 0) //user_id does not exists
+			return false;
+
+		//Hash user_pass using phpass
+		$hasher = new PasswordHash(PHPASS_HASH_STRENGTH, PHPASS_HASH_PORTABLE);
+		$user_pass_hashed = $hasher->HashPassword($user_pass);
+
+		//Update account row from the database
+		$data = array(
+					'user_pass' => $user_pass_hashed,
+					'user_modified' => date('c'),
+				);
+
+        $this->CI->db->where('user_id', $user_id);
+
+        if (!$this->CI->db->update($this->user_table), $data)) //There was a problem! 
+            return false;	
+
+		return true;
+    }
+
 	/**
 	 * Login and sets session variables
 	 *

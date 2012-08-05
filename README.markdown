@@ -7,10 +7,12 @@
 _SimpleLogin-Secure was written by Alex Dunae._  
 _SimpleLogin-Secure for Code Igniter is a modified version of Anthony Graddy’s Simplelogin library._  
 _SimpleLogin-Secure version 2 is by Stéphane Bourzeix from Alex Dunae's code._  
+_SimpleLogin-Secure was updated by Alexandru Mos to update the user's password._ 
 
 * ChangeLog:  
   * Upgraded to use the PHPASS version 0.3  
   * Changed the "getwhere()" calls to "get_where()" for Code Igniter 2.0 compatibility.  
+  * Added "update()" method change the user password
 
 
 In Anthony’s words:  
@@ -61,10 +63,14 @@ The methods exposed by SimpleLogin-Secure are identical to those of Simplelogin.
     $this->simpleloginsecure->logout();
 
     // delete by user ID
-    $this->simpleloginsecure->delete($user_id); 
+    $this->simpleloginsecure->delete($user_id);
+    
+    // update the user
+    $this->simpleloginsecure->update($user_id, 'the_new_password');
 
 
 _Credits_  
 _The original Simplelogin library was written by Anthony Graddy._    
 _SimpleLogin-Secure was written by Alex Dunae, 2008._  
 _SimpleLogin-Secure new version, 2.0, for Code Igniter II by Stéphane Bourzeix 2011/2012._
+_SimpleLogin-Secure small update (added update account method which updates the user's password) by Alexandru Mos, 2012._
